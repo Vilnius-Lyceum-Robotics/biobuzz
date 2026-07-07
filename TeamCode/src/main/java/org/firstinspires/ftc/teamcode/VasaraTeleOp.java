@@ -29,16 +29,13 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
 /*
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
+ * This file contains a minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
  * of the FTC Driver Station. When a selection is made from the menu, the corresponding OpMode
  * class is instantiated on the Robot Controller and executed.
@@ -52,42 +49,58 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Vasara2026", group="Linear OpMode")
 //@Disabled
-public class BasicOpMode_Linear extends LinearOpMode {
+public class VasaraTeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();
-
-    private final Drivetrain drivetrain = new Drivetrain();
-    private final Shooter shooter = new Shooter();
+    private boolean LB1LastPressed = false;
+    private boolean RB1LastPressed = false;
 
     @Override
     public void runOpMode() {
+        RobotController.init(hardwareMap);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
-        drivetrain.init(hardwareMap, telemetry);
-        shooter.init(hardwareMap, telemetry);
 
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
 
-        drivetrain.start();
-
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            drivetrain.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            shooter.intakePower(gamepad1.left_trigger);
-            shooter.transferPower(gamepad1.left_bumper ? 1 : 0);
-            shooter.shooterPower(gamepad1.right_trigger);
+            RobotController.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
-            // Show the elapsed game time and wheel power.
+            if (gamepad1.left_bumper && !LB1LastPressed) {
+                LB1LastPressed = true;
+                RobotController.toggleIntake();
+            } else if (!gamepad1.left_bumper && LB1LastPressed) {
+                LB1LastPressed = false;
+            }
+
+            if (gamepad1.right_bumper && !RB1LastPressed) {
+                RB1LastPressed = true;
+                RobotController.toggleShoot();
+            } else if (!gamepad1.right_bumper && RB1LastPressed) {
+                RB1LastPressed = false;
+            }
+
+            if (gamepad1.dpad_up) {
+                RobotController.raiseHood();
+            } else if (gamepad1.dpad_down) {
+                RobotController.lowerHood();
+            }
+
+            RobotController.setShooterPower(gamepad1.right_trigger);
+
+            for (String key : RobotController.getTelemetry().keySet()) {
+                telemetry.addData(key, RobotController.getTelemetry().get(key));
+            }
+
             telemetry.addData("Run Time", runtime.toString());
             telemetry.update();
         }
 
-        drivetrain.stop();
-        shooter.stop();
+        RobotController.stop();
         telemetry.addData("Status", "Stopped");
         telemetry.update();
     }

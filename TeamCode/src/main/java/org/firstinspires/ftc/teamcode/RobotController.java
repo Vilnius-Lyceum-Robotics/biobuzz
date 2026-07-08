@@ -1,6 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Hood;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.subsystems.Transfer;
+
 import java.util.LinkedHashMap;
 
 public class RobotController {
@@ -20,6 +27,10 @@ public class RobotController {
         lift = new Lift(hardwareMap);
         shooter = new Shooter(hardwareMap);
         hood = new Hood(hardwareMap);
+
+        lift.close();
+        hood.raise();
+        shooter.start();
     }
 
     public static void drive(double y, double x, double turn) {
@@ -36,18 +47,12 @@ public class RobotController {
             transfer.start();
         }
     }
-    public static void toggleShoot() {
+    public static void toggleLift() {
         if (lift.isOpen) {
             lift.close();
-            transfer.stop();
         } else {
             lift.open();
-            transfer.start();
         }
-    }
-
-    public static void setShooterPower(double power) {
-        shooter.setPower(power);
     }
 
     public static void raiseHood() {

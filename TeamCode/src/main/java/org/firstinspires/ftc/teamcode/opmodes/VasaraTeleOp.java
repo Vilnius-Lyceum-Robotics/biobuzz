@@ -27,11 +27,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.ButtonStates;
+import org.firstinspires.ftc.teamcode.DriverHubCLIMenu;
+import org.firstinspires.ftc.teamcode.RobotController;
+
+import java.util.Map;
 
 
 /*
@@ -53,35 +59,61 @@ public class VasaraTeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();
-    private boolean LB1LastPressed = false;
-    private boolean RB1LastPressed = false;
+    private static final String RC_DRIVING_MODE = "Robot-centered";
+    private static final String FC_DRIVING_MODE = "Field-centered";
+
+    public void populateTelemetry(String[] lines) {
+        for (String line : lines) {
+            telemetry.addLine(line);
+        }
+    }
+    public void populateTelemetry(Map<String, Object> data) {
+        for (String key : data.keySet()) {
+            telemetry.addData(key, data.get(key));
+        }
+    }
 
     @Override
     public void runOpMode() {
+        // INIT
+        DriverHubCLIMenu drivingModeMenu = new DriverHubCLIMenu.Builder()
+                .caption("Pick a driving mode:")
+                .choices(FC_DRIVING_MODE, RC_DRIVING_MODE)
+                .build();
+
+        DriverHubCLIMenu[] initMenus = {drivingModeMenu};
+
+        for (DriverHubCLIMenu initMenu : initMenus) {
+            while (!isStopRequested()) {
+                populateTelemetry(initMenu.getTelemetry());
+                telemetry.update();
+
+                if (ButtonStates.justPressed(gamepad1.dpad_up, ButtonStates.Button.DPAD_U1)){
+                    initMenu.selectPrevious();
+                } else if (ButtonStates.justPressed(gamepad1.dpad_down, ButtonStates.Button.DPAD_D1)){
+                    initMenu.selectPrevious();
+                } else if (ButtonStates.justPressed(gamepad1.cross, ButtonStates.Button.CROSS1)){
+                    initMenu.confirm();
+                    break;
+                }
+            }
+        }
         RobotController.init(hardwareMap);
-        telemetry.addData("Status", "Initialized");
+        telemetry.addLine("Initialization complete. Press START");
         telemetry.update();
-
-        // Wait for the game to start (driver presses START)
-        waitForStart();
         runtime.reset();
+        waitForStart();
 
-        // run until the end of the match (driver presses STOP)
+        // START
         while (opModeIsActive()) {
             RobotController.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
-            if (gamepad1.left_bumper && !LB1LastPressed) {
-                LB1LastPressed = true;
+            if (ButtonStates.justPressed(gamepad1.left_bumper, ButtonStates.Button.LB1)) {
                 RobotController.toggleIntake();
-            } else if (!gamepad1.left_bumper && LB1LastPressed) {
-                LB1LastPressed = false;
             }
 
-            if (gamepad1.right_bumper && !RB1LastPressed) {
-                RB1LastPressed = true;
-                RobotController.toggleShoot();
-            } else if (!gamepad1.right_bumper && RB1LastPressed) {
-                RB1LastPressed = false;
+            if (ButtonStates.justPressed(gamepad1.right_bumper, ButtonStates.Button.RB1)) {
+                RobotController.toggleLift();
             }
 
             if (gamepad1.dpad_up) {
@@ -90,16 +122,13 @@ public class VasaraTeleOp extends LinearOpMode {
                 RobotController.lowerHood();
             }
 
-            RobotController.setShooterPower(gamepad1.right_trigger);
-
-            for (String key : RobotController.getTelemetry().keySet()) {
-                telemetry.addData(key, RobotController.getTelemetry().get(key));
-            }
+            populateTelemetry(RobotController.getTelemetry());
 
             telemetry.addData("Run Time", runtime.toString());
             telemetry.update();
         }
 
+        // STOP
         RobotController.stop();
         telemetry.addData("Status", "Stopped");
         telemetry.update();

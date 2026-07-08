@@ -1,15 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.LinkedHashMap;
 
 public class Lift {
     private final double LIFT_OPEN_POS = 0.2;
-    private final double LIFT_CLOSED_POS = 0.35; // ???
+    private final double LIFT_CLOSED_POS = 0.5; // ???
     private final Servo SERVO;
 
     public boolean isOpen = false;

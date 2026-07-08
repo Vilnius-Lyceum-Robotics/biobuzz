@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 public class Shooter {
     private final DcMotorEx MOTOR_R;
     private final DcMotorEx MOTOR_L;
+    private final int SHOOTER_POWER = 1;
     public Shooter (HardwareMap hardwareMap) {
         MOTOR_R = hardwareMap.get(DcMotorEx.class, "shooterRight");
         MOTOR_L = hardwareMap.get(DcMotorEx.class, "shooterLeft");
@@ -21,9 +22,9 @@ public class Shooter {
         return result;
     }
 
-    public void setPower(double power) {
-        MOTOR_R.setPower(power);
-        MOTOR_L.setPower(power);
+    public void start() {
+        MOTOR_R.setPower(SHOOTER_POWER);
+        MOTOR_L.setPower(SHOOTER_POWER);
     }
     public void stop() {
         MOTOR_R.setPower(0);

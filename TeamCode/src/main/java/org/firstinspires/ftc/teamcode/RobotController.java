@@ -30,7 +30,14 @@ public class RobotController {
 
         lift.close();
         hood.raise();
-        shooter.start();
+    }
+
+    public static void accelerateShooter() {
+        shooter.accelerate();
+    }
+
+    public static void decelerateShooter() {
+        shooter.decelerate();
     }
 
     public static void drive(double y, double x, double turn) {

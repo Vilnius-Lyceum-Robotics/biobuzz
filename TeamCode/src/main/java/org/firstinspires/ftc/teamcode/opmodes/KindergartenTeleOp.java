@@ -29,7 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -53,13 +52,12 @@ import java.util.Map;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Vasara2026", group="Linear OpMode")
-public class VasaraTeleOp extends LinearOpMode {
+@TeleOp(name="KindergartenTeleOp", group="Linear OpMode")
+//@Disabled
+public class KindergartenTeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();
-    private static final String RC_DRIVING_MODE = "Robot-centered";
-    private static final String FC_DRIVING_MODE = "Field-centered";
 
     public void populateTelemetry(String[] lines) {
         for (String line : lines) {
@@ -75,11 +73,6 @@ public class VasaraTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
         // INIT
-        DriverHubCLIMenu drivingModeMenu = new DriverHubCLIMenu.Builder()
-                .caption("Pick a driving mode:")
-                .choices(FC_DRIVING_MODE, RC_DRIVING_MODE)
-                .build();
-
         DriverHubCLIMenu[] initMenus = {};
 
         for (DriverHubCLIMenu initMenu : initMenus) {
@@ -90,7 +83,7 @@ public class VasaraTeleOp extends LinearOpMode {
                 if (gamepad1.dpadUpWasPressed()){
                     initMenu.selectPrevious();
                 } else if (gamepad1.dpadDownWasPressed()){
-                    initMenu.selectNext();
+                    initMenu.selectPrevious();
                 } else if (gamepad1.crossWasPressed()){
                     initMenu.confirm();
                     break;
@@ -106,27 +99,6 @@ public class VasaraTeleOp extends LinearOpMode {
         // START
         while (opModeIsActive()) {
             RobotController.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-
-            if (gamepad1.leftBumperWasPressed()) {
-                RobotController.toggleIntake();
-            }
-
-            if (gamepad1.rightBumperWasPressed()) {
-                RobotController.toggleLift();
-            }
-
-            if (gamepad1.dpadLeftWasPressed()) {
-                RobotController.decelerateShooter();
-            } else if (gamepad1.dpadRightWasPressed()) {
-                RobotController.accelerateShooter();
-            }
-
-            if (gamepad1.dpad_up) {
-                RobotController.raiseHood();
-            } else if (gamepad1.dpad_down) {
-                RobotController.lowerHood();
-            }
-
             populateTelemetry(RobotController.getTelemetry());
 
             telemetry.addData("Run Time", runtime.toString());

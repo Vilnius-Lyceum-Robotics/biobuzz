@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.LinkedHashMap;
@@ -17,8 +18,8 @@ public class Drivetrain {
         MOTOR_RL = hardwareMap.get(DcMotor.class, "leftRear");
         MOTOR_RR = hardwareMap.get(DcMotor.class, "rightRear");
 
-        MOTOR_FL.setDirection(DcMotor.Direction.REVERSE);
-        MOTOR_FR.setDirection(DcMotor.Direction.FORWARD);
+        MOTOR_FL.setDirection(DcMotor.Direction.FORWARD);
+        MOTOR_FR.setDirection(DcMotor.Direction.REVERSE);
         MOTOR_RL.setDirection(DcMotor.Direction.REVERSE);
         MOTOR_RR.setDirection(DcMotor.Direction.FORWARD);
     }
@@ -33,8 +34,8 @@ public class Drivetrain {
 
         double powerFL = (y + x + turn) / denominator;
         double powerFR = (y - x - turn) / denominator;
-        double powerRL = (y - x + turn) / denominator;
-        double powerRR = (y + x - turn) / denominator;
+        double powerRL = (y + x - turn) / denominator;
+        double powerRR = (y - x + turn) / denominator;
 
         MOTOR_FL.setPower(powerFL);
         MOTOR_FR.setPower(powerFR);

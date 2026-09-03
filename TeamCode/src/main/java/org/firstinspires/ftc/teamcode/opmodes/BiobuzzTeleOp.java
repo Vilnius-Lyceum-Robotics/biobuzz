@@ -33,8 +33,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.DriverHubCLIMenu;
 import org.firstinspires.ftc.teamcode.RobotController;
+import org.firstinspires.ftc.teamcode.DriverHubCLIMenu;
 
 import java.util.Map;
 
@@ -52,9 +52,9 @@ import java.util.Map;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="KindergartenTeleOp", group="Linear OpMode")
+@TeleOp(name="BiobuzzTeleOp", group="Linear OpMode")
 //@Disabled
-public class KindergartenTeleOp extends LinearOpMode {
+public class BiobuzzTeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();
@@ -83,7 +83,7 @@ public class KindergartenTeleOp extends LinearOpMode {
                 if (gamepad1.dpadUpWasPressed()){
                     initMenu.selectPrevious();
                 } else if (gamepad1.dpadDownWasPressed()){
-                    initMenu.selectPrevious();
+                    initMenu.selectNext();
                 } else if (gamepad1.crossWasPressed()){
                     initMenu.confirm();
                     break;
@@ -99,8 +99,13 @@ public class KindergartenTeleOp extends LinearOpMode {
         // START
         while (opModeIsActive()) {
             RobotController.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            populateTelemetry(RobotController.getTelemetry());
+            if (gamepad1.rightBumperWasPressed()) {
+                RobotController.changeIntakeRunningMode(1);
+            } else if (gamepad1.leftBumperWasPressed()) {
+                RobotController.changeIntakeRunningMode(-1);
+            }
 
+            populateTelemetry(RobotController.getTelemetry());
             telemetry.addData("Run Time", runtime.toString());
             telemetry.update();
         }

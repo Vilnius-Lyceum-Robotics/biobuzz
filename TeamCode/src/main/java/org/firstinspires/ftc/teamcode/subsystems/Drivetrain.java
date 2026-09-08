@@ -20,8 +20,8 @@ public class Drivetrain {
 
         MOTOR_FL.setDirection(DcMotor.Direction.FORWARD);
         MOTOR_FR.setDirection(DcMotor.Direction.REVERSE);
-        MOTOR_RL.setDirection(DcMotor.Direction.REVERSE);
-        MOTOR_RR.setDirection(DcMotor.Direction.FORWARD);
+        MOTOR_RL.setDirection(DcMotor.Direction.FORWARD);
+        MOTOR_RR.setDirection(DcMotor.Direction.REVERSE);
     }
     public LinkedHashMap<String, Object> getTelemetry() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
@@ -34,8 +34,8 @@ public class Drivetrain {
 
         double powerFL = (y + x + turn) / denominator;
         double powerFR = (y - x - turn) / denominator;
-        double powerRL = (y + x - turn) / denominator;
-        double powerRR = (y - x + turn) / denominator;
+        double powerRL = (y - x + turn) / denominator;
+        double powerRR = (y + x - turn) / denominator;
 
         MOTOR_FL.setPower(powerFL);
         MOTOR_FR.setPower(powerFR);

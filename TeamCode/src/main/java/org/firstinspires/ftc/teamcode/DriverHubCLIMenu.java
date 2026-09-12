@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 public class DriverHubCLIMenu {
     public String caption;
     public String[] choices;
-    public int selectedIndex;
+    private int selectedIndex;
     public String confirmed;
     private DriverHubCLIMenu (Builder builder) {
         this.caption = builder.caption;

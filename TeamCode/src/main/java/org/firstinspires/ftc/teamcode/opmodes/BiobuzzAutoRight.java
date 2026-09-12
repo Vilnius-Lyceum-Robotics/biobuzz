@@ -14,7 +14,7 @@ public class BiobuzzAutoRight extends OpMode {
     private Follower follower;
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0));
-    private final Pose targetPose = new Pose(51, -53, Math.toRadians(0));
+    private final Pose targetPose = new Pose(51, 53, Math.toRadians(0));
 
     private PathChain path;
 

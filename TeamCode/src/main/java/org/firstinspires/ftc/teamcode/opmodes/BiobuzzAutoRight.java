@@ -7,6 +7,7 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.RobotController;
 import org.firstinspires.ftc.teamcode.pedoPathing.Constants;
 
 @Autonomous(name = "BiobuzzAutoRight", preselectTeleOp = "BiobuzzTeleOp")
@@ -33,6 +34,8 @@ public class BiobuzzAutoRight extends OpMode {
                         startPose.getHeading()
                 )
                 .build();
+
+        RobotController.init(hardwareMap);
     }
 
     @Override

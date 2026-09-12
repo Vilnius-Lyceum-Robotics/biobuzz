@@ -105,6 +105,10 @@ public class BiobuzzTeleOp extends LinearOpMode {
                 RobotController.changeIntakeRunningMode(-1);
             }
 
+            if (gamepad1.dpadUpWasPressed()) {
+                RobotController.toggleLift();
+            }
+
             populateTelemetry(RobotController.getTelemetry());
             telemetry.addData("Run Time", runtime.toString());
             telemetry.update();

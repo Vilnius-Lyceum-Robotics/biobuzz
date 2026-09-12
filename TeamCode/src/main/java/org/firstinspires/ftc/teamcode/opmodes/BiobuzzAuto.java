@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.pedoPathing.Constants;
 
 @Autonomous(name = "Kickoff Auto", preselectTeleOp = "BiobuzzTeleOp")
-public class KickoffAuto extends OpMode {
+public class BiobuzzAuto extends OpMode {
     private Follower follower;
 
     private final Pose startPose = new Pose(0, 0, Math.toRadians(0));

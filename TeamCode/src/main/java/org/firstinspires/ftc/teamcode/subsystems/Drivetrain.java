@@ -22,6 +22,11 @@ public class Drivetrain {
         MOTOR_FR.setDirection(DcMotor.Direction.REVERSE);
         MOTOR_RL.setDirection(DcMotor.Direction.FORWARD);
         MOTOR_RR.setDirection(DcMotor.Direction.REVERSE);
+
+        MOTOR_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        MOTOR_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        MOTOR_RL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        MOTOR_RR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public LinkedHashMap<String, Object> getTelemetry() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();

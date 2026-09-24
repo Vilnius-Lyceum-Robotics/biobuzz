@@ -19,10 +19,10 @@ public class Constants {
     public static FollowerConstants followerConstants = new FollowerConstants()
             .mass(6.875)
             .forwardZeroPowerAcceleration(-27.115125737098365)
-            .lateralZeroPowerAcceleration(-52.56350791702381);
-//            .translationalPIDFCoefficients(new PIDFCoefficients(0.03, 0, 0.001, 0.03))
-//            .headingPIDFCoefficients(new PIDFCoefficients(0.7, 0, 0.03, 0.08))
-//            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.6, 0, 0.0001, 0.6, 0.025))
+            .lateralZeroPowerAcceleration(-52.56350791702381)
+            .translationalPIDFCoefficients(new PIDFCoefficients(0.04, 0, 0.004, 0.02))
+            .headingPIDFCoefficients(new PIDFCoefficients(0.6, 0, 0.04, 0.02))
+            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.02, 0, 0.002, 0.6, 0.01));
 //            .centripetalScaling(0.0002);
 
     public static MecanumConstants driveConstants = new MecanumConstants()

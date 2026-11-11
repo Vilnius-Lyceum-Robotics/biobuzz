@@ -100,13 +100,15 @@ public class BiobuzzTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             RobotController.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             if (gamepad1.rightBumperWasPressed()) {
-                RobotController.changeIntakeRunningMode(1);
+                RobotController.changeTransInRunningMode(1);
             } else if (gamepad1.leftBumperWasPressed()) {
-                RobotController.changeIntakeRunningMode(-1);
+                RobotController.changeTransInRunningMode(-1);
             }
 
-            if (gamepad1.dpadUpWasPressed()) {
-                RobotController.toggleLift();
+            if (gamepad1.rightTriggerWasPressed()) {
+                RobotController.accelerateShooter();
+            } else if (gamepad1.leftTriggerWasPressed()){
+                RobotController.decelerateShooter();
             }
 
             populateTelemetry(RobotController.getTelemetry());

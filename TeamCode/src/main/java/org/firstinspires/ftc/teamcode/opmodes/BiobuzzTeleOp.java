@@ -111,6 +111,12 @@ public class BiobuzzTeleOp extends LinearOpMode {
                 RobotController.decelerateShooter();
             }
 
+            if (gamepad1.dpadDownWasPressed()) {
+                RobotController.openShooter();
+            } else if (gamepad1.dpadDownWasReleased()) {
+                RobotController.closeShooter();
+            }
+
             populateTelemetry(RobotController.getTelemetry());
             telemetry.addData("Run Time", runtime.toString());
             telemetry.update();

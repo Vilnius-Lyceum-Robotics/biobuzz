@@ -50,6 +50,14 @@ public class RobotController {
         shooter.decelerate();
     }
 
+    public static void openShooter() {
+        shooter.openTriggers();
+    }
+
+    public static void closeShooter() {
+        shooter.closeTriggers();
+    }
+
     public static LinkedHashMap<String, Object> getTelemetry() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         result.putAll(drivetrain.getTelemetry());

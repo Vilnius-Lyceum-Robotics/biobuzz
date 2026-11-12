@@ -15,8 +15,8 @@ public class Shooter {
 
     private int currentSpeedState;
     private boolean triggerState;
-    private final double MAX_L_POWER = 0.74;
-    private final double MAX_R_POWER = 0.79;
+    private final double MAX_L_POWER = 0.81; // big balls
+    private final double MAX_R_POWER = 0.8; // small balls
     private final int SPEED_STATES_NUM = 5;
     private final double TRIGGER_L_RANGE = 0.33;
     private final double TRIGGER_R_RANGE = 0.36;
